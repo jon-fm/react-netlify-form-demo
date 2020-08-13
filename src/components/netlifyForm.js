@@ -1,7 +1,21 @@
 import React, { useState, useEffect } from 'react'
 
 const NetlifyForm = ({ formName, preSubmit, postSubmit, formValues, children, ...rest }) => {
+  /* 
 
+  API: 
+    formName
+    formValues
+    preSubmit (return true, else no-op)
+    postSubmit (no return necessary)
+
+  Optional:
+    automaticHoneypot
+
+  */
+
+  // Complicated stuff to keep things well-hidden during runtime (and from bots)
+  // but exposed for netlify build bots
   const [inNetlifyBuild, setInNetlifyBuild] = useState(true)
   useEffect(() => {
     setInNetlifyBuild(false)
@@ -34,7 +48,7 @@ const NetlifyForm = ({ formName, preSubmit, postSubmit, formValues, children, ..
   const onSubmit = async (e) => {
     e.preventDefault()
 
-    if (preSubmit()) {
+    if ((preSubmit && preSubmit()) || !preSubmit) {
       if (await handleSubmit()) {
         postSubmit && postSubmit()
       }
