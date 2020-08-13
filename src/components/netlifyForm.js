@@ -9,7 +9,9 @@ const NetlifyForm = ({
 }) => {
   /* 
 
-  Automatic Honeypot ✅
+  - Automatic Honeypot ✅
+  - Pull this form in and have a functioning, awesome Netlify form. Literally
+    no other plumbing required.
 
   API: 
     formName
@@ -19,10 +21,6 @@ const NetlifyForm = ({
     preSubmit (return true, else no-op)
     postSubmit (no return necessary)
     automaticHoneypot
-
-  TODO:
-    Async support for preSub and postSub?
-    Honeypot
 
   */
 
@@ -71,12 +69,14 @@ const NetlifyForm = ({
   const onSubmit = async (e) => {
     e.preventDefault()
 
-    if ((preSubmit && preSubmit()) || !preSubmit) {
+    if ((preSubmit && await preSubmit()) || !preSubmit) {
       if (await handleSubmit()) {
         postSubmit && postSubmit()
       }
       else {
-        throw new Error("Error submitting to Netlify") // Figure out how to handle this better
+        // Figure out how to handle this better
+        // It shouldn't happen, but you never know
+        throw new Error("Error submitting to Netlify")
       }
     }
     else {

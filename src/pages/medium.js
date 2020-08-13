@@ -7,9 +7,12 @@ const IndexPage = () => {
 
   // Pre-Submit for validations and disabling button
   const [processing, setProcessing] = useState(false)
-  const preSubmit = () => {
+  const preSubmit = async () => {
     if (formValues.name.length > 0 && formValues.email.length > 0) {
       setProcessing(true)
+      // Wait 2 seconds to simulate async delay (maybe user confirmation? or 
+      // external checks?)
+      await (new Promise(resolve => setTimeout(resolve, 2000)))
       return true
     }
     else {
