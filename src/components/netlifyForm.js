@@ -1,16 +1,28 @@
 import React, { useState, useEffect } from 'react'
 
-const NetlifyForm = ({ formName, preSubmit, postSubmit, formValues, children, ...rest }) => {
+const NetlifyForm = ({
+  formName,
+  preSubmit,
+  postSubmit,
+  formValues,
+  children,
+}) => {
   /* 
+
+  Automatic Honeypot ✅
 
   API: 
     formName
     formValues
+    
+  Optional:
     preSubmit (return true, else no-op)
     postSubmit (no return necessary)
-
-  Optional:
     automaticHoneypot
+
+  TODO:
+    Async support for preSub and postSub?
+    Honeypot
 
   */
 
@@ -21,17 +33,24 @@ const NetlifyForm = ({ formName, preSubmit, postSubmit, formValues, children, ..
     setInNetlifyBuild(false)
   }, [])
 
+  // Honeypot Input state
+  const [honey, setHoney] = useState('')
+
+
+  const formEncodeString = (str) => encodeURIComponent(str).replace(/%20/g, '+')
+
   // Transform object to proper form data
   const encodeData = (obj) => (
     Object.entries(obj)
       .map(pair =>
-        encodeURIComponent(pair[0])
+        formEncodeString(pair[0])
         + '='
-        + encodeURIComponent(pair[1])
+        + formEncodeString(pair[1])
       )
       .join('&')
-      .replace(/%20/g, '+')
   )
+
+
 
   // Submit via POST then pass back true
   const handleSubmit = async () => {
@@ -39,7 +58,11 @@ const NetlifyForm = ({ formName, preSubmit, postSubmit, formValues, children, ..
       await fetch("/", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: encodeData({ "form-name": formName, ...formValues })
+        body: encodeData({
+          ...formValues,
+          "form-name": formName,
+          infoo: honey
+        })
       })
     )
   }
@@ -63,11 +86,14 @@ const NetlifyForm = ({ formName, preSubmit, postSubmit, formValues, children, ..
 
   return (
     inNetlifyBuild
-      ? <form name={formName} onSubmit={onSubmit} data-netlify="true">
+      ? <form name={formName} onSubmit={onSubmit} data-netlify="true" netlify-honeypot="infoo">
         {children}
       </form>
       : <form onSubmit={onSubmit}>
         {children}
+        <p style={{ opacity: '0', position: 'absolute', top: '0', left: '0' }}>
+          <input style={{ width: '0', height: '0', zIndex: '-1' }} name="description" value={honey} onChange={(e) => setHoney(e.target.value)} />
+        </p>
       </form>
   )
 }
