@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Link, navigate } from 'gatsby'
 import Layout from "../components/layout"
-import NetlifyForm from '../components/netlifyForm'
+import NetlifyForm from 'react-ssg-netlify-forms'
 
 const IndexPage = () => {
 

@@ -9609,6 +9609,11 @@ react-remove-scroll@^2.3.0:
     use-callback-ref "^1.2.3"
     use-sidecar "^1.0.1"
 
+react-ssg-netlify-forms@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-ssg-netlify-forms/-/react-ssg-netlify-forms-1.0.3.tgz#4d240bcdea5a08b4de79671eed2ef95323c84f33"
+  integrity sha512-olk43Ujip3hP1dmWIKpH0g7cMjstNOWOWabnY7UfbTNqhlBbxvb+vXPAKp6qS+4gaF0n58739gzl5hUYB5YMyQ==
+
 react-style-singleton@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/react-style-singleton/-/react-style-singleton-2.1.0.tgz#7396885332e9729957f9df51f08cadbfc164e1c4"
