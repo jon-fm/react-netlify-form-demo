@@ -36,7 +36,7 @@ const IndexPage = () => {
         <Link to="/medium" >For a bit more complex form, click here</Link>
       </div>
       <div>
-        <a href="https://github.com/jon-fm/react-netlify-form-demo/blob/master/src/pages/index.js">To see the code, click here!</a>
+        <a href="https://github.com/jon-sully/react-netlify-form-demo/blob/master/src/pages/index.js">To see the code, click here!</a>
       </div>
     </Layout>
   )
